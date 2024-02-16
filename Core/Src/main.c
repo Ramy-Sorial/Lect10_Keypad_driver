@@ -43,8 +43,7 @@
 UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
-Matrix_Keypad_t kp = { .Rows = 4, .Columns = 4, .IntputPort = GPIOB,
-		.OutputPort = GPIOB, .InputStartingPin = 6, .OutputStartingPin = 12 };
+Matrix_Keypad_t kp = { .Rows = 4, .Columns = 4, .HW_Interface = { } };
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
