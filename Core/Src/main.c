@@ -43,7 +43,6 @@
 UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
-Matrix_Keypad_t kp = { .Rows = 4, .Columns = 4, .HW_Interface = { } };
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -88,11 +87,10 @@ int main(void) {
 	MX_GPIO_Init();
 	MX_USART1_UART_Init();
 	/* USER CODE BEGIN 2 */
-	__HAL_RCC_GPIOB_CLK_ENABLE();
-	Keypad_Init(&kp);
+	Keypad_HW_Init();
+
 	char str[32];
 
-	__HAL_RCC_GPIOA_CLK_ENABLE();
 	/* USER CODE END 2 */
 
 	/* Infinite loop */

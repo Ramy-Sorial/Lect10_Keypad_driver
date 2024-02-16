@@ -7,33 +7,30 @@
 
 #include "Matrix_Keypad_Imp.h"
 
-void Keypad_Refresh(Matrix_Keypad_t *keypad)
-{
-    // temporary variable to store the new status of keys
-    uint32_t TempKeys = 0;
-    uint16_t OutputStat = 1 << (keypad->Rows - 1);
+void Keypad_Refresh(Matrix_Keypad_t *keypad) {
+	// temporary variable to store the new status of keys
+	uint32_t TempKeys = 0;
+	uint16_t OutputStat = 1 << (keypad->Rows - 1);
 
-    uint16_t x = 0;
-    do
-    {
+	uint16_t x = 0;
+	do {
 
-        TempKeys <<= keypad->Columns;
-        // send the output status to the hardware
-        keypad->HW_Interface.Keypad_SetOutputs(OutputStat);
-        keypad->HW_Interface.Keypad_Delay(1);
-        // read the input status from the hardware
+		TempKeys <<= keypad->Columns;
+		// send the output status to the hardware
+		keypad->HW_Interface.Keypad_SetOutputs(OutputStat);
+		keypad->HW_Interface.Keypad_Delay(1);
+		// read the input status from the hardware
 
-        TempKeys |= keypad->HW_Interface.Keypad_GetInputs();
-        OutputStat >>= 1;
-        x++;
-    } while (x < keypad->Rows);
+		TempKeys |= keypad->HW_Interface.Keypad_GetInputs();
+		OutputStat >>= 1;
+		x++;
+	} while (x < keypad->Rows);
 
-    keypad->KeysStatus = TempKeys;
+	keypad->KeysStatus = TempKeys;
 }
 
-void Keypad_Init(Matrix_Keypad_t *keypad)
-{
+void Keypad_Init(Matrix_Keypad_t *keypad) {
 
-    // turn off all the outputs
-    keypad->HW_Interface.Keypad_SetOutputs(0);
+	// turn off all the outputs
+	keypad->HW_Interface.Keypad_SetOutputs(0);
 }

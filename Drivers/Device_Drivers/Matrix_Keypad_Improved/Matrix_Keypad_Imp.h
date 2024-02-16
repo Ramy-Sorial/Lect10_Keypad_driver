@@ -36,6 +36,9 @@ typedef struct
         void (*Keypad_Delay)(uint32_t delay_ms);
     } HW_Interface;
 
+	/// @brief can used to hold the 1s mask used for IO operations
+	uint16_t IP_Mask;
+	uint16_t OP_Mask;
 } Matrix_Keypad_t;
 
 #ifdef __cplusplus

@@ -9,10 +9,12 @@
 #define INC_HARDWARE_INTERFACE_H_
 
 #define Keypad_Input_GPIO GPIOB
-#define Keypad_Input_Start GPIO_PIN_6
+#define Keypad_Input_Start 6
 
 #define Keypad_GPIO_Output GPIOB
-#define Keypad_Output_Start GPIO_PIN_12
+#define Keypad_Output_Start 12
+
+#include "../../Drivers/Device_Drivers/Matrix_Keypad_Improved/Matrix_Keypad_Imp.h"
 
 extern Matrix_Keypad_t kp;
 
