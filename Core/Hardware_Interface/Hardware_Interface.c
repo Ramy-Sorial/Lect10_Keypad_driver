@@ -24,14 +24,26 @@ void Keypad_HW_Delay(uint32_t delay_ms) {
 	HAL_Delay(delay_ms);
 }
 
-Matrix_Keypad_t kp = { .Columns = 4, .Rows = 4, .HW_Interface = {
-		.Keypad_GetInputs = Keypad_HW_GetInputs, .Keypad_SetOutputs =
-				Keypad_HW_SetOutputs, .Keypad_Delay = Keypad_HW_Delay }, };
+Matrix_Keypad_t kp = {
+		.Columns = 4,
+		.Rows = 4,
+		.HW_Interface = {
+						.Keypad_GetInputs = Keypad_HW_GetInputs,
+						.Keypad_SetOutputs = Keypad_HW_SetOutputs,
+						.Keypad_Delay = Keypad_HW_Delay
+		},
+};
 
 void Keypad_HW_Init() {
+	//enable the clock
 	__HAL_RCC_GPIOB_CLK_ENABLE();
-	GPIO_InitTypeDef G = { .Mode = GPIO_MODE_OUTPUT_PP, .Speed =
-	GPIO_SPEED_FREQ_LOW, .Pin = 1 << Keypad_Output_Start };
+
+	//create an ini struct
+	GPIO_InitTypeDef G = {
+			.Mode = GPIO_MODE_OUTPUT_PP,
+			.Speed = GPIO_SPEED_FREQ_LOW,
+			.Pin = 1 << Keypad_Output_Start
+	};
 
 	//initialize the outputs
 	for (int x = 0; x < kp.Rows - 1; x++) {
@@ -52,5 +64,6 @@ void Keypad_HW_Init() {
 	HAL_GPIO_Init(Keypad_Input_GPIO, &G);
 	kp.IP_Mask = G.Pin;
 
+	//Initialize the driver
 	Keypad_Init(&kp);
 }
