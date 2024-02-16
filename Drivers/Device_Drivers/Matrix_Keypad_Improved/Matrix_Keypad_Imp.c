@@ -34,3 +34,7 @@ void Keypad_Init(Matrix_Keypad_t *keypad) {
 	// turn off all the outputs
 	keypad->HW_Interface.Keypad_SetOutputs(0);
 }
+
+uint8_t Keypad_Get_Key(Matrix_Keypad_t *keypad, uint8_t key) {
+	return (keypad->KeysStatus & (1 << key)) ? 1 : 0;
+}

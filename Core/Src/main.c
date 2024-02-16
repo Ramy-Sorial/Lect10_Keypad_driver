@@ -89,6 +89,11 @@ int main(void) {
 	/* USER CODE BEGIN 2 */
 	Keypad_HW_Init();
 
+	__HAL_RCC_GPIOC_CLK_ENABLE();
+	GPIO_InitTypeDef G = { .Pin = GPIO_PIN_13, .Mode = GPIO_MODE_OUTPUT_PP,
+			.Speed = GPIO_SPEED_FREQ_LOW, };
+	HAL_GPIO_Init(GPIOC, &G);
+
 	char str[32];
 
 	/* USER CODE END 2 */
@@ -101,8 +106,10 @@ int main(void) {
 		/* USER CODE BEGIN 3 */
 		Keypad_Refresh(&kp);
 
-		if (kp.KeysStatus & (1 << 0)) {
-			//do something
+		if (Keypad_Get_Key(&kp, 15)) {
+			HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_RESET);
+		} else {
+			HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_SET);
 		}
 
 		HAL_Delay(500);

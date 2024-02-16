@@ -8,10 +8,6 @@
 #include "Hardware_Interface.h"
 #include "stm32f1xx_hal.h"
 
-#include <stdio.h>
-extern UART_HandleTypeDef huart1;
-char n[32];
-
 uint16_t Keypad_HW_GetInputs() {
 	return (uint32_t) (Keypad_Input_GPIO->IDR & kp.IP_Mask)
 			>> Keypad_Input_Start;
@@ -28,15 +24,9 @@ void Keypad_HW_Delay(uint32_t delay_ms) {
 	HAL_Delay(delay_ms);
 }
 
-Matrix_Keypad_t kp = {
-		.Columns = 4,
-		.Rows = 4,
-		.HW_Interface = {
-					.Keypad_GetInputs = Keypad_HW_GetInputs,
-					.Keypad_SetOutputs = Keypad_HW_SetOutputs,
-					.Keypad_Delay = Keypad_HW_Delay
-		},
-};
+Matrix_Keypad_t kp = { .Columns = 4, .Rows = 4, .HW_Interface = {
+		.Keypad_GetInputs = Keypad_HW_GetInputs, .Keypad_SetOutputs =
+				Keypad_HW_SetOutputs, .Keypad_Delay = Keypad_HW_Delay }, };
 
 void Keypad_HW_Init() {
 	__HAL_RCC_GPIOB_CLK_ENABLE();
@@ -61,9 +51,6 @@ void Keypad_HW_Init() {
 	}
 	HAL_GPIO_Init(Keypad_Input_GPIO, &G);
 	kp.IP_Mask = G.Pin;
-
-	int p = sprintf(n, "%04x %04x\n", kp.OP_Mask, kp.IP_Mask);
-	HAL_UART_Transmit(&huart1, (uint8_t*) n, p, 100);
 
 	Keypad_Init(&kp);
 }

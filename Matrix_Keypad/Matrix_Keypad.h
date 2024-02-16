@@ -49,4 +49,11 @@ void Keypad_Init(Matrix_Keypad_t *keypad);
 /// @param keypad
 void Keypad_Refresh(Matrix_Keypad_t *keypad);
 
+/// @fn uint8_t Keypad_Get_Key(Matrix_Keypad_t*, uint8_t)
+/// @brief
+/// retrieves the logic level of a specific key
+/// @param keypad ptr to the keypad structure
+/// @param key numbr of the key to be read (starting from key #0
+/// @return 1 if the key was pressed and o otherwise
+uint8_t Keypad_Get_Key(Matrix_Keypad_t *keypad, uint8_t key);
 #endif /* DEVICE_DRIVERS_MATRIX_KEYPAD_H_ */

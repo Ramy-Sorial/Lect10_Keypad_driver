@@ -10,31 +10,29 @@
 
 #include <stdint.h>
 
-typedef struct
-{
-    /// @brief defines the number of rows
-    uint8_t Rows;
+typedef struct {
+	/// @brief defines the number of rows
+	uint8_t Rows;
 
-    /// @brief defines the number of columns
-    uint8_t Columns;
+	/// @brief defines the number of columns
+	uint8_t Columns;
 
-    /// @brief Holds the status of all keys
-    /// 32-bits means the max number of keys is 32
-    uint32_t KeysStatus;
+	/// @brief Holds the status of all keys
+	/// 32-bits means the max number of keys is 32
+	uint32_t KeysStatus;
 
-    /// @struct HW_Interface_t
-    /// @brief
-    /// Structure containing the function pointers to be used by
-    /// the driver
-    struct HW_Interface_t
-    {
-        /// @brief Reads the GPIO input pin status (Columns)
-        uint16_t (*Keypad_GetInputs)();
-        /// @brief Writes the GPIO output Status (Rows)
-        void (*Keypad_SetOutputs)(uint16_t Status);
-        /// @brief Used to generate a Delay
-        void (*Keypad_Delay)(uint32_t delay_ms);
-    } HW_Interface;
+	/// @struct HW_Interface_t
+	/// @brief
+	/// Structure containing the function pointers to be used by
+	/// the driver
+	struct HW_Interface_t {
+		/// @brief Reads the GPIO input pin status (Columns)
+		uint16_t (*Keypad_GetInputs)();
+		/// @brief Writes the GPIO output Status (Rows)
+		void (*Keypad_SetOutputs)(uint16_t Status);
+		/// @brief Used to generate a Delay
+		void (*Keypad_Delay)(uint32_t delay_ms);
+	} HW_Interface;
 
 	/// @brief can used to hold the 1s mask used for IO operations
 	uint16_t IP_Mask;
@@ -46,14 +44,21 @@ extern "C"
 {
 #endif
 
-    /// @brief Configres the hardware to use keypad
-    /// @param keypad
-    void Keypad_Init(Matrix_Keypad_t *keypad);
+/// @brief Configres the hardware to use keypad
+/// @param keypad
+void Keypad_Init(Matrix_Keypad_t *keypad);
 
-    /// @brief Function periodically called by the user to refresh the status of the keys
-    /// @param keypad
-    void Keypad_Refresh(Matrix_Keypad_t *keypad);
+/// @brief Function periodically called by the user to refresh the status of the keys
+/// @param keypad
+void Keypad_Refresh(Matrix_Keypad_t *keypad);
 
+/// @fn uint8_t Keypad_Get_Key(Matrix_Keypad_t*, uint8_t)
+/// @brief
+/// retrieves the logic level of a specific key
+/// @param keypad ptr to the keypad structure
+/// @param key numbr of the key to be read (starting from key #0
+/// @return 1 if the key was pressed and o otherwise
+uint8_t Keypad_Get_Key(Matrix_Keypad_t *keypad, uint8_t key);
 #ifdef __cplusplus
 }
 #endif
