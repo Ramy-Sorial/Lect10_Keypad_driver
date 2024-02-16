@@ -7,7 +7,6 @@
 
 #include "Matrix_Keypad.h"
 
-
 /// @brief Reads the input status from the input port
 static uint16_t Keypad_GetInputs(Matrix_Keypad_t *keypad) {
 	uint16_t Input = keypad->IntputPort->IDR & keypad->IP_Mask;
@@ -15,8 +14,7 @@ static uint16_t Keypad_GetInputs(Matrix_Keypad_t *keypad) {
 }
 
 ///@brief Write the status of output ports
-static void Keypad_SetOutputs(Matrix_Keypad_t *keypad,
-								uint16_t OutputStat) {
+static void Keypad_SetOutputs(Matrix_Keypad_t *keypad, uint16_t OutputStat) {
 	//turn off the pins
 	keypad->OutputPort->BRR |= keypad->OP_Mask;
 	//turn on only the needed ones according to the required output
@@ -88,4 +86,8 @@ void Keypad_Init(Matrix_Keypad_t *keypad) {
 
 //turn off all the outputs
 	Keypad_SetOutputs(keypad, 0);
+}
+
+uint8_t Keypad_Get_Key(Matrix_Keypad_t *keypad, uint8_t key) {
+	return (keypad->KeysStatus & (1 << key)) ? 1 : 0;
 }
